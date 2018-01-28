@@ -6,18 +6,24 @@ const ActionTypes = {
     PLUS_NUMBER : 'PLUS_NUMBER',
     MINUS_NUMBER : 'MINUS_NUMBER'
 }
-const store = Redux.createStore(function(state, action) {
+const store = Redux.createStore(function(state, action) { //state는 불변해ㅑ한다. 객체의 상태가 변하는 게 아니라 새로운 객체를 반화해야한다.
     console.log('reducer:',state);
     console.log('action:',action);
     if(action.type === ActionTypes.PLUS_NUMBER) {
-        return state+1;
+        return {
+            count : state.count +1
+        };
     }
     else if(action.type === ActionTypes.MINUS_NUMBER) {
-        return state-1;
+        return {
+            count : state.count -1
+        }
     }
 
     return state;
-},0);
+},{
+    count : 0
+});
 /*document.getElementById('plus').addEventListener('click', ()=>{
     store.dispatch({
     type : ActionTypes.PLUS_NUMBER
@@ -30,9 +36,10 @@ document.getElementById('minus').addEventListener('click', () => {
     })
 })*/
 
-store.subscribe(() => { //store를 바라보고 있다가 store의 state가 변경될 때마다 subscribe가 불린다.
+store.subscribe(() => { //store를 바라보고 있다가 store의 state가 변경될 때마다 subscribe가 불린다. (구독하기)
+    const state = store.getState();
     document.querySelector('#app')
-        .innerHTML = store.getState();
+        .innerHTML = state.count;
 
 })
 //createStore의 첫번재 인자는 reduce
@@ -55,7 +62,7 @@ store.dispatch({
 
 })
 console.log(store.getState());
-store.dispatch({
+store.dispatch({ //dispatch 는 보내기
     type : ActionTypes.MINUS_NUMBER,
 
 })
