@@ -23,7 +23,7 @@ const store = Redux.createStore(function(state, action) { //state는 불변해�
     return state;
 },{
     count : 0
-});
+}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 /*document.getElementById('plus').addEventListener('click', ()=>{
     store.dispatch({
     type : ActionTypes.PLUS_NUMBER
